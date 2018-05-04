@@ -1,21 +1,15 @@
 {
     "people":
     [
-        {"firstname": "Nathan",
-         "lastname" : "Knuth",
-         "formalname": null,
-         "awesome": "cool",
-         "job": "adult"
-        },
         {"firstname": "Aaron",
          "lastname": "Knuth",
          "formalname": "Mr. Knuth",
          "awesome" : "beast",
          "job": "student"
         },
-        {"firstname": "Reid",
-         "lastname": "Olson",
-         "formalname": "Reid A Book",
+        {"firstname": "Rich",
+         "lastname": "",
+         "formalname": "",
          "awesome": "awesome",
          "job": "student"
         }
@@ -30,6 +24,17 @@
         "to get started",
         "first, ",
         "I know, "
+    ],
+    "good_words":
+    [
+        "good",
+        "well done",
+        "well played",
+        "superb",
+        "great",
+        "wicked",
+        "smashing",
+        "brilliant"
     ],
     "positive_people_adjectives":
     [

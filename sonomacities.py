@@ -1,6 +1,6 @@
 import logging
 import json
-#from random import randint
+from random import randint
 from flask import Flask, render_template
 from flask_ask import Ask, statement, question, session
 
@@ -10,6 +10,11 @@ ask = Ask(app, "/")
 
 logging.getLogger("flask_ask").setLevel(logging.INFO)
 logger = logging.getLogger("flask_ask")
+
+
+def random_choice(word_list):
+    index = randint(0, len(word_list) - 1)
+    return word_list[index]
 
 
 @ask.launch
@@ -29,7 +34,6 @@ def new_game():
 
     people = json.load(open('people.json'))
     session.attributes['people'] = people
-
     session.attributes['cities'] = citiesDictionary
 
     return question(welcome_msg)
@@ -56,19 +60,23 @@ def FallBackIntnet():
 
 @ask.intent("NameIntent", convert={'firstname': str})
 def name_answer(firstname):
-    logger.info("In name_answer: firstname {}"
-                .format(firstname))
+    logger.info("NameIntent: firstname {}".format(firstname))
+
     session.attributes['firstname'] = firstname
-    msg = render_template('name',
-                          firstname=firstname)
+
+    msg = render_template('name', firstname=firstname)
+
     return question(msg)
 
 
 @ask.intent("StatusIntent")
 def StatusIntent():
-    citiesDictionary = session.attributes['cities']
     logger.info("StatusIntent:")
+
+    citiesDictionary = session.attributes['cities']
+
     numberFound = sum(citiesDictionary.values())
+
     msg = render_template('status', number=numberFound)
     return question(msg)
 
@@ -79,7 +87,13 @@ def CloverdaleIntent():
 
     session.attributes['cities']['Cloverdale'] = True
 
-    msg = render_template('city', city='Cloverdale')
+    good_words = session.attributes['people']['good_words']
+    adjectives = session.attributes['people']['positive_people_adjectives']
+
+    msg = render_template('city', city='Cloverdale',
+                          good=random_choice(good_words),
+                          adjective=random_choice(adjectives))
+
     return question(msg)
 
 
@@ -89,7 +103,12 @@ def CotatiIntent():
 
     session.attributes['cities']['Cotati'] = True
 
-    msg = render_template('city', city='Cotati')
+    good_words = session.attributes['people']['good_words']
+    adjectives = session.attributes['people']['positive_people_adjectives']
+
+    msg = render_template('city', city='Cotati',
+                          good=random_choice(good_words),
+                          adjective=random_choice(adjectives))
     return question(msg)
 
 
@@ -99,7 +118,12 @@ def HealdsburgIntent():
 
     session.attributes['cities']['Healdsburg'] = True
 
-    msg = render_template('city', city='Healdsburg')
+    good_words = session.attributes['people']['good_words']
+    adjectives = session.attributes['people']['positive_people_adjectives']
+
+    msg = render_template('city', city='Healdsburg',
+                          good=random_choice(good_words),
+                          adjective=random_choice(adjectives))
     return question(msg)
 
 
@@ -109,7 +133,12 @@ def PetalumaIntent():
 
     session.attributes['cities']['Petaluma'] = True
 
-    msg = render_template('city', city='Petaluma')
+    good_words = session.attributes['people']['good_words']
+    adjectives = session.attributes['people']['positive_people_adjectives']
+
+    msg = render_template('city', city='Petaluma',
+                          good=random_choice(good_words),
+                          adjective=random_choice(adjectives))
     return question(msg)
 
 
@@ -119,7 +148,12 @@ def RohnertParkIntent():
 
     session.attributes['cities']['RohnertPark'] = True
 
-    msg = render_template('city', city='RohnertPark')
+    good_words = session.attributes['people']['good_words']
+    adjectives = session.attributes['people']['positive_people_adjectives']
+
+    msg = render_template('city', city='RohnertPark',
+                          good=random_choice(good_words),
+                          adjective=random_choice(adjectives))
     return question(msg)
 
 
@@ -129,7 +163,12 @@ def SantaRosaIntent():
 
     session.attributes['cities']['SantaRosa'] = True
 
-    msg = render_template('city', city='SantaRosa')
+    good_words = session.attributes['people']['good_words']
+    adjectives = session.attributes['people']['positive_people_adjectives']
+
+    msg = render_template('city', city='SantaRosa',
+                          good=random_choice(good_words),
+                          adjective=random_choice(adjectives))
     return question(msg)
 
 
@@ -139,7 +178,12 @@ def SebastopolIntent():
 
     session.attributes['cities']['Sebastopol'] = True
 
-    msg = render_template('city', city='Sebastopol')
+    good_words = session.attributes['people']['good_words']
+    adjectives = session.attributes['people']['positive_people_adjectives']
+
+    msg = render_template('city', city='Sebastopol',
+                          good=random_choice(good_words),
+                          adjective=random_choice(adjectives))
     return question(msg)
 
 
@@ -149,7 +193,12 @@ def SonomaIntent():
 
     session.attributes['cities']['Sonoma'] = True
 
-    msg = render_template('city', city='Sonoma')
+    good_words = session.attributes['people']['good_words']
+    adjectives = session.attributes['people']['positive_people_adjectives']
+
+    msg = render_template('city', city='Sonoma',
+                          good=random_choice(good_words),
+                          adjective=random_choice(adjectives))
     return question(msg)
 
 
@@ -159,7 +208,12 @@ def WindsorIntent():
 
     session.attributes['cities']['Windsor'] = True
 
-    msg = render_template('city', city='Windsor')
+    good_words = session.attributes['people']['good_words']
+    adjectives = session.attributes['people']['positive_people_adjectives']
+
+    msg = render_template('city', city='Windsor',
+                          good=random_choice(good_words),
+                          adjective=random_choice(adjectives))
     return question(msg)
 
 

@@ -8,7 +8,7 @@ win: Good job!
 
 lose: Sorry, that's the wrong answer.
 
-city: Good, I heard you say {{ city }}.  Please give me another one?
+city: You said {{ city }}, that is {{ good }}. So {{ adjective }}. Please give me another one?
 
 bye: Good bye {{ firstname }}, I hope to see you again soon.
 
