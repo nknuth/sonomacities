@@ -1,6 +1,6 @@
 import logging
 import json
-from random import randint
+#from random import randint
 from flask import Flask, render_template
 from flask_ask import Ask, statement, question, session
 
@@ -8,61 +8,49 @@ app = Flask(__name__)
 ask = Ask(app, "/")
 
 
-logging.getLogger("flask_ask").setLevel(logging.DEBUG)
+logging.getLogger("flask_ask").setLevel(logging.INFO)
 logger = logging.getLogger("flask_ask")
-
-
-globalFirstName = None
-globalLastName = None
-citiesDictionary = {
-    'Cloverdale': False,
-    'Cotati': False,
-    'Healdsburg': False,
-    'Petaluma': False,
-    'RohnertPark': False,
-    'SantaRosa': False,
-    'Sebastopol': False,
-    'Sonoma': False,
-    'Windsor': False
-}
 
 
 @ask.launch
 def new_game():
+    citiesDictionary = {
+        'Cloverdale': False,
+        'Cotati': False,
+        'Healdsburg': False,
+        'Petaluma': False,
+        'RohnertPark': False,
+        'SantaRosa': False,
+        'Sebastopol': False,
+        'Sonoma': False,
+        'Windsor': False
+    }
     welcome_msg = render_template('welcome')
+
     people = json.load(open('people.json'))
     session.attributes['people'] = people
+
+    session.attributes['cities'] = citiesDictionary
+
     return question(welcome_msg)
 
 
 @ask.intent("YesIntent")
 def next_round():
-    numbers = [randint(0, 9) for _ in range(3)]
-    round_msg = render_template('round', numbers=numbers)
-    session.attributes['numbers'] = numbers[::-1]  # reverse
-    return question(round_msg)
+    msg = render_template('round')
+    return question(msg)
 
 
 @ask.intent("NoIntent")
 def goodbye():
-    msg = render_template('bye', firstname=globalFirstName)
+    firstname = session.attributes['firstname']
+    msg = render_template('bye', firstname=firstname)
     return statement(msg)
 
 
 @ask.intent("AMAZON.FallBackIntent")
-def goodbye():
+def FallBackIntnet():
     msg = render_template('fallback')
-    return statement(msg)
-
-
-@ask.intent("AnswerIntent",
-            convert={'first': int, 'second': int, 'third': int})
-def answer(first, second, third):
-    winning_numbers = session.attributes['numbers']
-    if [first, second, third] == winning_numbers:
-        msg = render_template('win')
-    else:
-        msg = render_template('lose')
     return statement(msg)
 
 
@@ -70,6 +58,7 @@ def answer(first, second, third):
 def name_answer(firstname):
     logger.info("In name_answer: firstname {}"
                 .format(firstname))
+    session.attributes['firstname'] = firstname
     msg = render_template('name',
                           firstname=firstname)
     return question(msg)
@@ -77,7 +66,7 @@ def name_answer(firstname):
 
 @ask.intent("StatusIntent")
 def StatusIntent():
-    global citiesDictionary
+    citiesDictionary = session.attributes['cities']
     logger.info("StatusIntent:")
     numberFound = sum(citiesDictionary.values())
     msg = render_template('status', number=numberFound)
@@ -86,9 +75,9 @@ def StatusIntent():
 
 @ask.intent("CloverdaleIntent")
 def CloverdaleIntent():
-    global citiesDictionary
     logger.info("CloverdaleIntent:")
-    citiesDictionary['Cloverdale'] = True
+
+    session.attributes['cities']['Cloverdale'] = True
 
     msg = render_template('city', city='Cloverdale')
     return question(msg)
@@ -96,9 +85,9 @@ def CloverdaleIntent():
 
 @ask.intent("CotatiIntent")
 def CotatiIntent():
-    global citiesDictionary
     logger.info("CotatiIntent:")
-    citiesDictionary['Cotati'] = True
+
+    session.attributes['cities']['Cotati'] = True
 
     msg = render_template('city', city='Cotati')
     return question(msg)
@@ -106,9 +95,9 @@ def CotatiIntent():
 
 @ask.intent("HealdsburgIntent")
 def HealdsburgIntent():
-    global citiesDictionary
     logger.info("HealdsburgIntent:")
-    citiesDictionary['Healdsburg'] = True
+
+    session.attributes['cities']['Healdsburg'] = True
 
     msg = render_template('city', city='Healdsburg')
     return question(msg)
@@ -116,9 +105,9 @@ def HealdsburgIntent():
 
 @ask.intent("PetalumaIntent")
 def PetalumaIntent():
-    global citiesDictionary
     logger.info("PetalumaIntent:")
-    citiesDictionary['Petaluma'] = True
+
+    session.attributes['cities']['Petaluma'] = True
 
     msg = render_template('city', city='Petaluma')
     return question(msg)
@@ -126,9 +115,9 @@ def PetalumaIntent():
 
 @ask.intent("RohnertParkIntent")
 def RohnertParkIntent():
-    global citiesDictionary
     logger.info("RohnertParkIntent:")
-    citiesDictionary['RohnertPark'] = True
+
+    session.attributes['cities']['RohnertPark'] = True
 
     msg = render_template('city', city='RohnertPark')
     return question(msg)
@@ -136,9 +125,9 @@ def RohnertParkIntent():
 
 @ask.intent("SantaRosaIntent")
 def SantaRosaIntent():
-    global citiesDictionary
     logger.info("SantaRosaIntent:")
-    citiesDictionary['SantaRosa'] = True
+
+    session.attributes['cities']['SantaRosa'] = True
 
     msg = render_template('city', city='SantaRosa')
     return question(msg)
@@ -146,9 +135,9 @@ def SantaRosaIntent():
 
 @ask.intent("SebastopolIntent")
 def SebastopolIntent():
-    global citiesDictionary
     logger.info("SebastopolIntent:")
-    citiesDictionary['Sebastopol'] = True
+
+    session.attributes['cities']['Sebastopol'] = True
 
     msg = render_template('city', city='Sebastopol')
     return question(msg)
@@ -156,9 +145,9 @@ def SebastopolIntent():
 
 @ask.intent("SonomaIntent")
 def SonomaIntent():
-    global citiesDictionary
     logger.info("SonomaIntent:")
-    citiesDictionary['Sonoma'] = True
+
+    session.attributes['cities']['Sonoma'] = True
 
     msg = render_template('city', city='Sonoma')
     return question(msg)
@@ -166,16 +155,13 @@ def SonomaIntent():
 
 @ask.intent("WindsorIntent")
 def WindsorIntent():
-    global citiesDictionary
     logger.info("WindsorIntent:")
-    citiesDictionary['Windsor'] = True
+
+    session.attributes['cities']['Windsor'] = True
 
     msg = render_template('city', city='Windsor')
     return question(msg)
 
 
 if __name__ == '__main__':
-    globalFirstName = None
-    globalLastName = None
-
     app.run(debug=True)
