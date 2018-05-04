@@ -1,0 +1,80 @@
+{
+    "people":
+    [
+        {"firstname": "Nathan",
+         "lastname" : "Knuth",
+         "formalname": null,
+         "awesome": "cool",
+         "job": "adult"
+        },
+        {"firstname": "Aaron",
+         "lastname": "Knuth",
+         "formalname": "Mr. Knuth",
+         "awesome" : "beast",
+         "job": "student"
+        },
+        {"firstname": "Reid",
+         "lastname": "Olson",
+         "formalname": "Reid A Book",
+         "awesome": "awesome",
+         "job": "student"
+        }
+    ],
+    "examples":
+    {"boolean": true,
+     "number": 123,
+     "string": "Hello"
+    },
+    "alexa_to_get_started":
+    [
+        "to get started",
+        "first, ",
+        "I know, "
+    ],
+    "positive_people_adjectives":
+    [
+        "adaptable",
+        "adventuous",
+        "affectionate",
+        "ambitious",
+        "amiable",
+        "compassionate",
+        "considerate",
+        "courageous",
+        "courteous",
+        "diligent",
+        "empathetic",
+        "exuberant",
+        "frank",
+        "generous",
+        "gregarious",
+        "impartial",
+        "intuitive",
+        "inventive",
+        "passionate",
+        "persistent",
+        "philosophical",
+        "practical",
+        "rational",
+        "reliable",
+        "resourceful",
+        "sensible",
+        "sincere",
+        "sympathetic",
+        "unassuming",
+        "witty"
+    ],
+    "unreliable_people_adjectives":
+    [
+        "dubious",
+        "erratic",
+        "capricious",
+        "fickle",
+        "inconsistent",
+        "mercurial",
+        "wayward",
+        "haphazard",
+        "arbitrary",
+        "wanton"
+    ]
+}
