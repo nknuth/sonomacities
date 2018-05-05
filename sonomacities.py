@@ -17,6 +17,50 @@ def random_choice(word_list):
     return word_list[index]
 
 
+def city_message(city):
+    citiesDictionary = session.attributes['cities']
+    good_words = session.attributes['people']['good_words']
+    adjectives = session.attributes['people']['positive_people_adjectives']
+
+    if citiesDictionary[city] is True:
+        msg1 = render_template('redo', city=city,
+                               good=random_choice(good_words))
+    else:
+        msg1 = render_template('city', city=city,
+                               good=random_choice(good_words),
+                               adjective=random_choice(adjectives))
+        citiesDictionary[city] = True
+
+    found = sum(citiesDictionary.values())
+
+    if found == 9:
+        msg2 = render_template('finished',
+                               good=random_choice(good_words))
+        response = statement(msg1 + ' ' + msg2)
+    else:
+        msg2 = render_template('keepgoing')
+        response = question(msg1 + ' ' + msg2)
+
+    return response
+
+
+def status_update():
+    # report on the number found...
+    citiesDictionary = session.attributes['cities']
+    found = sum(citiesDictionary.values())
+
+    if found == 0:
+        msg = render_template('noneFound')
+    else:
+        ucities = [k for k, v in citiesDictionary.items() if v is True]
+        if found > 1:
+            ucities.insert(-1, 'and')
+        cities = ', '.join([u.encode('utf-8') for u in ucities])
+        msg = render_template('status', number=found, cities=cities)
+
+    return msg
+
+
 @ask.launch
 def new_game():
     citiesDictionary = {
@@ -72,149 +116,71 @@ def name_answer(firstname):
 @ask.intent("StatusIntent")
 def StatusIntent():
     logger.info("StatusIntent:")
-
-    citiesDictionary = session.attributes['cities']
-
-    numberFound = sum(citiesDictionary.values())
-
-    msg = render_template('status', number=numberFound)
+    msg = status_update()
     return question(msg)
 
 
 @ask.intent("CloverdaleIntent")
 def CloverdaleIntent():
     logger.info("CloverdaleIntent:")
-
-    session.attributes['cities']['Cloverdale'] = True
-
-    good_words = session.attributes['people']['good_words']
-    adjectives = session.attributes['people']['positive_people_adjectives']
-
-    msg = render_template('city', city='Cloverdale',
-                          good=random_choice(good_words),
-                          adjective=random_choice(adjectives))
-
-    return question(msg)
+    response = city_message('Cloverdale')
+    return response
 
 
 @ask.intent("CotatiIntent")
 def CotatiIntent():
     logger.info("CotatiIntent:")
-
-    session.attributes['cities']['Cotati'] = True
-
-    good_words = session.attributes['people']['good_words']
-    adjectives = session.attributes['people']['positive_people_adjectives']
-
-    msg = render_template('city', city='Cotati',
-                          good=random_choice(good_words),
-                          adjective=random_choice(adjectives))
-    return question(msg)
+    response = city_message('Cotati')
+    return response
 
 
 @ask.intent("HealdsburgIntent")
 def HealdsburgIntent():
     logger.info("HealdsburgIntent:")
-
-    session.attributes['cities']['Healdsburg'] = True
-
-    good_words = session.attributes['people']['good_words']
-    adjectives = session.attributes['people']['positive_people_adjectives']
-
-    msg = render_template('city', city='Healdsburg',
-                          good=random_choice(good_words),
-                          adjective=random_choice(adjectives))
-    return question(msg)
+    response = city_message('Healdsburg')
+    return response
 
 
 @ask.intent("PetalumaIntent")
 def PetalumaIntent():
     logger.info("PetalumaIntent:")
-
-    session.attributes['cities']['Petaluma'] = True
-
-    good_words = session.attributes['people']['good_words']
-    adjectives = session.attributes['people']['positive_people_adjectives']
-
-    msg = render_template('city', city='Petaluma',
-                          good=random_choice(good_words),
-                          adjective=random_choice(adjectives))
-    return question(msg)
+    response = city_message('Petaluma')
+    return response
 
 
 @ask.intent("RohnertParkIntent")
 def RohnertParkIntent():
     logger.info("RohnertParkIntent:")
-
-    session.attributes['cities']['RohnertPark'] = True
-
-    good_words = session.attributes['people']['good_words']
-    adjectives = session.attributes['people']['positive_people_adjectives']
-
-    msg = render_template('city', city='RohnertPark',
-                          good=random_choice(good_words),
-                          adjective=random_choice(adjectives))
-    return question(msg)
+    response = city_message('RohnertPark')
+    return response
 
 
 @ask.intent("SantaRosaIntent")
 def SantaRosaIntent():
     logger.info("SantaRosaIntent:")
-
-    session.attributes['cities']['SantaRosa'] = True
-
-    good_words = session.attributes['people']['good_words']
-    adjectives = session.attributes['people']['positive_people_adjectives']
-
-    msg = render_template('city', city='SantaRosa',
-                          good=random_choice(good_words),
-                          adjective=random_choice(adjectives))
-    return question(msg)
+    response = city_message('SantaRosa')
+    return response
 
 
 @ask.intent("SebastopolIntent")
 def SebastopolIntent():
     logger.info("SebastopolIntent:")
-
-    session.attributes['cities']['Sebastopol'] = True
-
-    good_words = session.attributes['people']['good_words']
-    adjectives = session.attributes['people']['positive_people_adjectives']
-
-    msg = render_template('city', city='Sebastopol',
-                          good=random_choice(good_words),
-                          adjective=random_choice(adjectives))
-    return question(msg)
+    response = city_message('Sebastopol')
+    return response
 
 
 @ask.intent("SonomaIntent")
 def SonomaIntent():
     logger.info("SonomaIntent:")
-
-    session.attributes['cities']['Sonoma'] = True
-
-    good_words = session.attributes['people']['good_words']
-    adjectives = session.attributes['people']['positive_people_adjectives']
-
-    msg = render_template('city', city='Sonoma',
-                          good=random_choice(good_words),
-                          adjective=random_choice(adjectives))
-    return question(msg)
+    response = city_message('Sonoma')
+    return response
 
 
 @ask.intent("WindsorIntent")
 def WindsorIntent():
     logger.info("WindsorIntent:")
-
-    session.attributes['cities']['Windsor'] = True
-
-    good_words = session.attributes['people']['good_words']
-    adjectives = session.attributes['people']['positive_people_adjectives']
-
-    msg = render_template('city', city='Windsor',
-                          good=random_choice(good_words),
-                          adjective=random_choice(adjectives))
-    return question(msg)
+    response = city_message('Windsor')
+    return response
 
 
 if __name__ == '__main__':

@@ -1,18 +1,22 @@
 welcome: Welcome to Sonoma Cities. What is your name?
 
-round: Can you guess the nine incorporated municipalities in Sonoma County?  Say 'status' for your score.  Go ahead, give me a city?
-
-cityconfirm: You said {{ city }}, correct?
-
-win: Good job!
+round: Here is the game... Can you guess the nine incorporated municipalities in Sonoma County?  Say 'status' for your score.  Go ahead, give me a city?
 
 lose: Sorry, that's the wrong answer.
 
-city: You said {{ city }}, that is {{ good }}. So {{ adjective }}. Please give me another one?
+city: You said {{ city }}, that is {{ good }}. So {{ adjective }}.
+
+redo: You said {{ city }}, that is {{ good }}, but you have already guessed this city. Maybe you should request 'status'.
+
+keepgoing: Please give me another one?
+
+finished: This game is complete.  Thank you for playing.
 
 bye: Good bye {{ firstname }}, I hope to see you again soon.
 
-status: You have guessed {{ number }} so far.  Please keep going.
+status: The {{ number }} cities you have guessed so far are {{ cities }}. Please keep going.
+
+noneFound: I am sorry, you have not guessed any cities correctly so far. Please keep going.
 
 name: Okay {{ firstname }}, is that correct?
 
