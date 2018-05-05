@@ -96,7 +96,7 @@ def goodbye():
     return statement(msg)
 
 
-@ask.intent("AMAZON.FallBackIntent")
+@ask.intent("AMAZON.FallbackIntent")
 def FallBackIntnet():
     msg = render_template('fallback')
     return statement(msg)
