@@ -99,7 +99,13 @@ def goodbye():
 @ask.intent("AMAZON.FallbackIntent")
 def FallBackIntnet():
     msg = render_template('fallback')
-    return statement(msg)
+    return question(msg)
+
+
+@ask.intent("authorintent")
+def AuthorsIntent():
+    msg = render_template('authors')
+    return question(msg)
 
 
 @ask.intent("NameIntent", convert={'firstname': str})

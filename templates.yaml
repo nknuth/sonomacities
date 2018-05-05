@@ -20,4 +20,6 @@ noneFound: I am sorry, you have not guessed any cities correctly so far. Please 
 
 name: Okay {{ firstname }}, is that correct?
 
-fallback: I have fallen.  Here's hoping you can help me.
+fallback: I have hit the fallback intent. There is something I did not understand. please repeat.
+
+authors: The authors of this program are Aaron and Rich.
