@@ -275,5 +275,10 @@ def ValleyFordIntent():
     msg = render_template('Notfound', city='Valley Ford')
     return question(msg)
 
+@ask.intent("NapaIntent")
+def NapaIntent():
+    msg = render_template('Notfound', city='Napa')
+    return question(msg)
+
 if __name__ == '__main__':
     app.run(debug=True)
