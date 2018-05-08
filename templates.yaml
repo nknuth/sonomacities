@@ -1,6 +1,6 @@
 welcome: Welcome to Sonoma Cities. What is your name?
 
-round: Here is the game... Can you guess the nine cities in Sonoma County?  Say 'status' for your score and 'Hint' if you need help.  Go ahead, give me a city?
+round: Here is the game... Can you guess the nine cities in Sonoma County?  Say 'status' for your score and, 'Hint', if you need help.  Go ahead, give me a city?
 
 lose: Sorry, that's the wrong answer.
 
@@ -21,6 +21,8 @@ noneFound: I am sorry, you have not guessed any cities correctly so far. Please 
 name: Okay {{ firstname }}, is that correct?
 
 fallback: I have hit the fallback intent. There is something I did not understand. please repeat.
+
+confused: I heard a word that I don't understand.  Please try again.
 
 authors: The authors of this program are Aaron and Rich.
 
