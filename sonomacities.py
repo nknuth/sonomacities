@@ -8,7 +8,7 @@ app = Flask(__name__)
 ask = Ask(app, "/")
 
 
-logging.getLogger("flask_ask").setLevel(logging.INFO)
+logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 logger = logging.getLogger("flask_ask")
 
 
@@ -21,6 +21,7 @@ def city_message(city):
     citiesDictionary = session.attributes['cities']
     good_words = session.attributes['people']['good_words']
     adjectives = session.attributes['people']['positive_people_adjectives']
+    firstname = session.attributes['firstname']
 
     if citiesDictionary[city] is True:
         msg1 = render_template('redo', city=city,
@@ -35,7 +36,7 @@ def city_message(city):
 
     if found == 9:
         msg2 = render_template('finished',
-                               good=random_choice(good_words))
+                               firstname=firstname)
         response = statement(msg1 + ' ' + msg2)
     else:
         msg2 = render_template('keepgoing')
@@ -97,16 +98,26 @@ def goodbye():
 
 
 @ask.intent("AMAZON.FallbackIntent")
-def FallBackIntnet():
+def FallbackIntent():
     msg = render_template('fallback')
     return question(msg)
 
+@ask.intent("AMAZON.StopIntent")
+def StopIntent():
+    citiesDictionary = session.attributes['cities']
+    found = sum(citiesDictionary.values())
+    msg = render_template('stop', found=found)
+    return statement(msg)
 
 @ask.intent("authorintent")
 def AuthorsIntent():
     msg = render_template('authors')
     return question(msg)
 
+@ask.intent("Hintintent")
+def Hintintent():
+    msg = render_template('hint')
+    return question(msg)
 
 @ask.intent("NameIntent", convert={'firstname': str})
 def name_answer(firstname):
@@ -188,6 +199,81 @@ def WindsorIntent():
     response = city_message('Windsor')
     return response
 
+
+@ask.intent("BodegaIntent")
+def BodegaIntent():
+    msg = render_template('Notfound', city='Bodega')
+    return question(msg)
+
+@ask.intent("BodegaBayIntent")
+def BodegaBayIntent():
+    msg = render_template('Notfound', city='Bodega Bay')
+    return question(msg)
+
+@ask.intent("CazaderoIntent")
+def CazaderoIntent():
+    msg = render_template('Notfound', city='Cazadero')
+    return question(msg)
+
+@ask.intent("ForestvilleIntent")
+def ForestvilleIntent():
+    msg = render_template('Notfound', city='Forestville')
+    return question(msg)
+
+@ask.intent("FultonIntent")
+def FultonIntent():
+    msg = render_template('Notfound', city='Fulton')
+    return question(msg)
+
+@ask.intent("GeyservilleIntent")
+def GeyservilleIntent():
+    msg = render_template('Notfound', city='Geyserville')
+    return question(msg)
+
+@ask.intent("GlenEllenIntent")
+def GlenEllenIntent():
+    msg = render_template('Notfound', city='Glen Ellen')
+    return question(msg)
+
+@ask.intent("GratonIntent")
+def GratonIntent():
+    msg = render_template('Notfound', city='Graton')
+    return question(msg)
+
+@ask.intent("GuernevilleIntent")
+def GuernevilleIntent():
+    msg = render_template('Notfound', city='Guerneville')
+    return question(msg)
+
+@ask.intent("JennerIntent")
+def JennerIntent():
+    msg = render_template('Notfound', city='Jenner')
+    return question(msg)
+
+@ask.intent("OccidentalIntent")
+def OccidentalIntent():
+    msg = render_template('Notfound', city='Occidental')
+    return question(msg)
+
+@ask.intent("PenngroveIntent")
+def PenngroveIntent():
+    msg = render_template('Notfound', city='Penngrove')
+    return question(msg)
+
+@ask.intent("RoselandIntent")
+def RoselandIntent():
+    msg = render_template('Notfound', city='Roseland')
+    return question(msg)
+
+@ask.intent("SalmonCreekIntent")
+def SalmonCreekIntent():
+    msg = render_template('Notfound', city='Salmon Creek')
+    return question(msg)
+
+@ask.intent("ValleyFordIntent")
+def ValleyFordIntent():
+    msg = render_template('Notfound', city='Valley Ford')
+    return question(msg)
 
 if __name__ == '__main__':
     app.run(debug=True)

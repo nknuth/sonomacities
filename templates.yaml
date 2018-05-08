@@ -1,6 +1,6 @@
 welcome: Welcome to Sonoma Cities. What is your name?
 
-round: Here is the game... Can you guess the nine incorporated municipalities in Sonoma County?  Say 'status' for your score.  Go ahead, give me a city?
+round: Here is the game... Can you guess the nine cities in Sonoma County?  Say 'status' for your score and 'Hint' if you need help.  Go ahead, give me a city?
 
 lose: Sorry, that's the wrong answer.
 
@@ -10,7 +10,7 @@ redo: You said {{ city }}, that is {{ good }}, but you have already guessed this
 
 keepgoing: Please give me another one?
 
-finished: This game is complete.  Thank you for playing.
+finished: This game is complete.  Thank you {{ firstname }} for playing this game.
 
 bye: Good bye {{ firstname }}, I hope to see you again soon.
 
@@ -22,4 +22,10 @@ name: Okay {{ firstname }}, is that correct?
 
 fallback: I have hit the fallback intent. There is something I did not understand. please repeat.
 
-authors: The authors of this program are Aaron Knuth and Rich Benz.
+authors: The authors of this program are Aaron and Rich.
+
+hint: Here is a hint, get a life.
+
+Notfound: Sorry, {{ city }} is incorrect, please try again.
+
+stop: Good bye, you found {{ found }} cities. Hope to see you soon.
