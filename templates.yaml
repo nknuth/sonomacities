@@ -1,12 +1,16 @@
 welcome: Welcome to Sonoma Cities. What is your name?
 
-round: Here is the game... Can you guess the nine cities in Sonoma County?  Say 'status' for your score and, 'Hint', if you need help.  Go ahead, give me a city?
+round: Here is the game... Can you guess the nine cities in Sonoma County?  Say 'status' for your score, and say 'Hint', if you need help.  Go ahead, give me a city?
 
 lose: Sorry, that's the wrong answer.
 
 city: You said {{ city }}, that is {{ good }}. So {{ adjective }}.
 
-redo: You said {{ city }}, that is {{ good }}, but you have already guessed this city. Maybe you should request 'status'.
+redo: |
+  <speak>
+  <say-as interpret-as="interjection"> {{ grief }}!</say-as>
+  You said {{ city }}, but you have already guessed this city. Maybe you should request 'status'.
+  </speak>
 
 keepgoing: Please give me another one?
 
@@ -26,7 +30,19 @@ confused: I heard a word that I don't understand.  Please try again.
 
 authors: The authors of this program are Aaron and Rich.
 
-hint: Here is a hint, get a life.
+hint: |
+  <speak> Here is a hint, get a life.
+  <say-as interpret-as="interjection"> just kidding!</say-as>
+  If you ask for a hint again, I will be more helpful.
+  </speak>
+
+whisperHint: |
+  <speak xmlns:amazon="http://amazon.com"> I will whisper one of the
+  cities you have not guessed.
+  Listen carefully, why dont you <emphasis level="strong">say...</emphasis>
+  <amazon:effect name="whispered">{{ city }}
+  </amazon:effect>
+  </speak>
 
 Notfound: Sorry, {{ city }} is incorrect, please try again.
 

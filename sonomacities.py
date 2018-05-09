@@ -23,24 +23,29 @@ def city_message(city):
     adjectives = session.attributes['people']['positive_people_adjectives']
     firstname = session.attributes['firstname']
 
+    response = None
     if citiesDictionary[city] is True:
-        msg1 = render_template('redo', city=city,
-                               good=random_choice(good_words))
+        grief = random_choice(["boohoo", "darn", "bummer", "d'oh",
+                               "good grief"])
+
+        msg1 = render_template('redo', city=city, grief=grief)
+
+        response = question(msg1)
     else:
         msg1 = render_template('city', city=city,
                                good=random_choice(good_words),
                                adjective=random_choice(adjectives))
         citiesDictionary[city] = True
 
-    found = sum(citiesDictionary.values())
+        found = sum(citiesDictionary.values())
 
-    if found == 9:
-        msg2 = render_template('finished',
-                               firstname=firstname)
-        response = statement(msg1 + ' ' + msg2)
-    else:
-        msg2 = render_template('keepgoing')
-        response = question(msg1 + ' ' + msg2)
+        if found == 9:
+            msg2 = render_template('finished',
+                                   firstname=firstname)
+            response = statement(msg1 + ' ' + msg2)
+        else:
+            msg2 = render_template('keepgoing')
+            response = question(msg1 + ' ' + msg2)
 
     return response
 
@@ -75,7 +80,11 @@ def new_game():
         'Sonoma': False,
         'Windsor': False
     }
+    # Use this to keep track of the fact that we just asked the
+    # user their name.
     session.attributes['askedName'] = True
+    # Use this to keep track of the kind of hint we want to give.
+    session.attributes['giveGoodHint'] = False
     welcome_msg = render_template('welcome')
 
     people = json.load(open('people.json'))
@@ -120,7 +129,21 @@ def AuthorsIntent():
 
 @ask.intent("Hintintent")
 def Hintintent():
-    msg = render_template('hint')
+    # Set msg to ~something~ as fallback
+    msg = "it appears you dont need a hint"
+
+    give_good_hint = session.attributes['giveGoodHint']
+    if give_good_hint is False:
+        msg = render_template('hint')
+        session.attributes['giveGoodHint'] = True
+    else:
+        # Find a city they have not guessed yet
+        citiesDictionary = session.attributes['cities']
+        for city in citiesDictionary:
+            if citiesDictionary[city] is False:
+                msg = render_template('whisperHint', city=city)
+                break
+
     return question(msg)
 
 
